@@ -1,4 +1,4 @@
-from logutils.capture_memory import get_hpu_memory_stats
+# from logutils.capture_memory import get_hpu_memory_stats
 
 
 def log_details(func):
