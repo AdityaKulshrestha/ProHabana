@@ -21,5 +21,6 @@ def get_hpu_memory_stats(device=None) -> Dict[str, float]:
         "total_memory_available (GB)": to_gb_rounded(mem_stats["Limit"]),
     }
 
-    return mem_dict
+    return mem_dict              
+
 

@@ -4,7 +4,6 @@ from setuptools import setup, find_packages
 setup(
     name='ProHabana',
     version='0.1',
-    packages=find_packages(),
     install_requires=[
         # List your dependencies here
     ],
@@ -12,6 +11,8 @@ setup(
     author_email='kulshresthaaditya02@gmail.com',
     description='Easy to profile Habana Gaudi workload package',
     long_description=open('README.md').read(),
+    packages=find_packages(where='src'),
+    package_dir={'': 'src'},
     long_description_content_type='text/markdown',
     url='',
     classifiers=[
