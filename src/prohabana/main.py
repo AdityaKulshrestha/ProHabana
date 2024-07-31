@@ -1,5 +1,9 @@
 # from logutils.capture_memory import get_hpu_memory_stats
-
+from typing import Dict
+import torch
+import habana_frameworks.torch as ht
+import habana_frameworks.torch.core as htcore
+import habana_frameworks.torch.hpu.graphs as htgraphs
 
 def log_details(func):
     def wrapper(*args, **kwargs) -> Dict[str, float]:
@@ -14,15 +18,18 @@ def log_details(func):
         """
         from habana_frameworks.torch.hpu import memory_stats
 
-        mem_stats = memory_stats(device)
+        output = func(*args, **kwargs)
+
+        mem_stats = memory_stats(torch.device('hpu'))
 
         mem_dict = {
-            "memory_allocated (GB)": to_gb_rounded(mem_stats["InUse"]),
-            "max_memory_allocated (GB)": to_gb_rounded(mem_stats["MaxInUse"]),
-            "total_memory_available (GB)": to_gb_rounded(mem_stats["Limit"]),
+            "memory_allocated (GB)": round(mem_stats["InUse"] / 1e9, 2),
+            "max_memory_allocated (GB)": round(mem_stats["MaxInUse"] / 1e9, 2),
+            "total_memory_available (GB)": round(mem_stats["Limit"] / 1e9, 2),
         }
-
-        return mem_dict
+        
+        print(mem_dict)
+        return output
 
     return wrapper 
 
